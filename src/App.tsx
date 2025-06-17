@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Github, Linkedin, Mail, Terminal, Code2, Database, Network, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Brain, Github, Linkedin, Mail, Terminal, Code2, Database, Network, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
 function App() {
@@ -16,6 +16,10 @@ function App() {
       const scrollAmount = direction === 'left' ? -400 : 400;
       projectsRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
+  };
+
+  const handleProjectClick = () => {
+    window.open('https://www.kaggle.com/muhammadalvaro', '_blank');
   };
 
   const projects = [
@@ -191,21 +195,27 @@ function App() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="project-card rounded-xl p-6 neon-border flex-none w-[400px]"
+                  className="project-card rounded-xl p-6 neon-border flex-none w-[400px] cursor-pointer group"
                   style={{ scrollSnapAlign: 'start' }}
+                  onClick={handleProjectClick}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-400 mb-4">{project.description}</p>
+                  <div className="relative overflow-hidden rounded-lg mb-4">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                      <ExternalLink className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-[#00f3ff] transition-colors duration-300">{project.title}</h3>
+                  <p className="text-gray-400 mb-4 group-hover:text-gray-300 transition-colors duration-300">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 bg-[#00f3ff]/10 rounded-full text-[#00f3ff] text-sm"
+                        className="px-3 py-1 bg-[#00f3ff]/10 rounded-full text-[#00f3ff] text-sm group-hover:bg-[#00f3ff]/20 transition-colors duration-300"
                       >
                         {tech}
                       </span>
@@ -214,6 +224,11 @@ function App() {
                 </motion.div>
               ))}
             </div>
+          </div>
+          <div className="text-center mt-8">
+            <p className="text-gray-400 text-sm">
+              Click on any project to view more details on Kaggle
+            </p>
           </div>
         </div>
       </section>
