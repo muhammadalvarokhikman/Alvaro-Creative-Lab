@@ -76,45 +76,67 @@ function App() {
     { name: "Computer Vision", level: 87, icon: Brain }
   ];
 
+  // Enhanced animation variants with smoother transitions
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { 
+      opacity: 0, 
+      y: 30,
+      scale: 0.95
+    },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const floatingVariants = {
+    animate: {
+      y: [-10, 10, -10],
+      rotate: [0, 2, -2, 0],
+      transition: {
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut"
       }
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0f0f0f] to-[#1a1a1a] text-white overflow-x-hidden">
-      {/* Floating Particles Background */}
+      {/* Enhanced Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(25)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-[#00f3ff] rounded-full opacity-30"
+            className="absolute w-1 h-1 bg-[#00f3ff] rounded-full"
             animate={{
               x: [0, Math.random() * 100 - 50],
               y: [0, Math.random() * 100 - 50],
-              opacity: [0.3, 0.8, 0.3]
+              opacity: [0.2, 0.8, 0.2],
+              scale: [0.5, 1.2, 0.5]
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: Math.random() * 4 + 3,
               repeat: Infinity,
-              repeatType: "reverse"
+              repeatType: "reverse",
+              ease: [0.25, 0.46, 0.45, 0.94]
             }}
             style={{
               left: `${Math.random() * 100}%`,
@@ -124,17 +146,24 @@ function App() {
         ))}
       </div>
 
-      {/* Enhanced Navbar */}
+      {/* Ultra Smooth Navbar */}
       <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/5"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ 
+          duration: 1.2, 
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: 0.2
+        }}
+        className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/5"
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             <motion.div 
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.05,
+                transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+              }}
               className="text-[#00f3ff] font-bold text-2xl tracking-wide"
             >
               <span className="bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent">
@@ -147,16 +176,28 @@ function App() {
               animate="visible"
               className="flex gap-10"
             >
-              {['About', 'Projects', 'Skills', 'Contact'].map((item) => (
+              {['About', 'Projects', 'Skills', 'Contact'].map((item, index) => (
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   variants={itemVariants}
-                  whileHover={{ scale: 1.1, color: '#00f3ff' }}
-                  className="text-gray-300 hover:text-[#00f3ff] transition-all duration-300 font-medium tracking-wide relative group"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    color: '#00f3ff',
+                    transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="text-gray-300 hover:text-[#00f3ff] transition-all duration-500 font-medium tracking-wide relative group"
                 >
                   {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] group-hover:w-full transition-all duration-300"></span>
+                  <motion.span 
+                    className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-[#00f3ff] to-[#9d00ff]"
+                    initial={{ width: 0 }}
+                    whileHover={{ 
+                      width: '100%',
+                      transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                    }}
+                  />
                 </motion.a>
               ))}
             </motion.div>
@@ -164,43 +205,44 @@ function App() {
         </div>
       </motion.nav>
 
-      {/* Enhanced Hero Section */}
+      {/* Ultra Smooth Hero Section */}
       <motion.section
         id="about"
         ref={heroRef}
         initial={{ opacity: 0 }}
         animate={heroInView ? { opacity: 1 } : {}}
-        transition={{ duration: 1.2 }}
+        transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
       >
-        {/* Sophisticated Background */}
+        {/* Enhanced Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,243,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,243,255,0.03)_1px,transparent_1px)] bg-[size:6rem_6rem]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,243,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,243,255,0.02)_1px,transparent_1px)] bg-[size:6rem_6rem]" />
           <motion.div
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.3, 0.1]
+              scale: [1, 1.3, 1],
+              opacity: [0.05, 0.2, 0.05],
+              rotate: [0, 180, 360]
             }}
             transition={{
-              duration: 8,
+              duration: 12,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: [0.25, 0.46, 0.45, 0.94]
             }}
             className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00f3ff] rounded-full filter blur-[120px]"
           />
           <motion.div
             animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.1, 0.2, 0.1]
+              scale: [1.3, 1, 1.3],
+              opacity: [0.05, 0.15, 0.05],
+              rotate: [360, 180, 0]
             }}
             transition={{
-              duration: 10,
+              duration: 15,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: [0.25, 0.46, 0.45, 0.94]
             }}
             className="absolute bottom-1/4 right-1/4 w-[32rem] h-[32rem] bg-[#9d00ff] rounded-full filter blur-[140px]"
           />
-          <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/30 to-black/60" />
         </div>
 
         <div className="container mx-auto px-6 z-10">
@@ -208,32 +250,80 @@ function App() {
             <motion.div
               initial={{ opacity: 0, x: -100 }}
               animate={heroInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 1, delay: 0.3 }}
+              transition={{ 
+                duration: 1.2, 
+                delay: 0.3,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
               className="lg:w-1/2 text-left space-y-8"
             >
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={{ 
+                  duration: 1,
+                  delay: 0.5,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
                 className="space-y-2"
               >
-                <h2 className="text-2xl font-light text-[#00f3ff] tracking-wider">Hello, I'm</h2>
+                <motion.h2 
+                  className="text-2xl font-light text-[#00f3ff] tracking-wider"
+                  animate={{ opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  Hello, I'm
+                </motion.h2>
                 <h1 className="text-6xl lg:text-8xl font-bold leading-tight">
-                  <span className="bg-gradient-to-r from-white via-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent">
+                  <motion.span 
+                    className="bg-gradient-to-r from-white via-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent"
+                    animate={{ 
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{ 
+                      duration: 5, 
+                      repeat: Infinity,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }}
+                    style={{ backgroundSize: '200% 200%' }}
+                  >
                     Muhammad
-                  </span>
+                  </motion.span>
                   <br />
-                  <span className="bg-gradient-to-r from-[#9d00ff] via-[#00f3ff] to-white bg-clip-text text-transparent">
+                  <motion.span 
+                    className="bg-gradient-to-r from-[#9d00ff] via-[#00f3ff] to-white bg-clip-text text-transparent"
+                    animate={{ 
+                      backgroundPosition: ['100% 50%', '0% 50%', '100% 50%']
+                    }}
+                    transition={{ 
+                      duration: 5, 
+                      repeat: Infinity,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                      delay: 0.5
+                    }}
+                    style={{ backgroundSize: '200% 200%' }}
+                  >
                     Alvaro
-                  </span>
+                  </motion.span>
                 </h1>
-                <h3 className="text-3xl font-light text-gray-300 tracking-wide">Machine Learning Engineer</h3>
+                <motion.h3 
+                  className="text-3xl font-light text-gray-300 tracking-wide"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1, duration: 1 }}
+                >
+                  Machine Learning Engineer
+                </motion.h3>
               </motion.div>
               
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.7 }}
+                transition={{ 
+                  duration: 1,
+                  delay: 0.7,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
                 className="text-xl text-gray-400 leading-relaxed max-w-lg"
               >
                 "Code, Data, and the Future: All Connected"
@@ -242,143 +332,258 @@ function App() {
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 animate={heroInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.8, delay: 0.9 }}
+                transition={{ 
+                  duration: 1,
+                  delay: 0.9,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
                 className="flex items-center gap-4"
               >
-                <Brain className="w-20 h-20 text-[#00f3ff]" />
+                <motion.div variants={floatingVariants} animate="animate">
+                  <Brain className="w-20 h-20 text-[#00f3ff]" />
+                </motion.div>
                 <div className="w-px h-16 bg-gradient-to-b from-transparent via-[#00f3ff] to-transparent"></div>
-                <div className="text-sm text-gray-400 leading-relaxed">
+                <motion.div 
+                  className="text-sm text-gray-400 leading-relaxed"
+                  animate={{ opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
                   Transforming complex data<br />
                   into intelligent solutions
-                </div>
+                </motion.div>
               </motion.div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 100 }}
               animate={heroInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 1, delay: 0.5 }}
+              transition={{ 
+                duration: 1.2, 
+                delay: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
               className="lg:w-1/2"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/10 to-[#9d00ff]/10 rounded-3xl blur-xl"></div>
-                <div className="relative bg-black/40 backdrop-blur-xl p-10 rounded-3xl border border-white/10 shadow-2xl">
+              <motion.div
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                }}
+                className="relative"
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/10 to-[#9d00ff]/10 rounded-3xl blur-xl"
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    opacity: [0.5, 0.8, 0.5]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
+                <div className="relative bg-black/30 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 shadow-2xl">
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    <motion.div 
+                      className="w-3 h-3 rounded-full bg-red-500"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <motion.div 
+                      className="w-3 h-3 rounded-full bg-yellow-500"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                    />
+                    <motion.div 
+                      className="w-3 h-3 rounded-full bg-green-500"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                    />
                     <span className="text-gray-400 text-sm ml-4">About Me</span>
                   </div>
                   
-                  <div className="space-y-6 text-gray-300 leading-relaxed">
-                    <p className="text-lg">
+                  <motion.div 
+                    className="space-y-6 text-gray-300 leading-relaxed"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <motion.p variants={itemVariants} className="text-lg">
                       Hello, I'm <span className="text-[#00f3ff] font-semibold">Alvaro</span>, focused on machine learning with a passion for building intelligent models to solve real-world problems and uncover meaningful insights from data.
-                    </p>
-                    <p>
+                    </motion.p>
+                    <motion.p variants={itemVariants}>
                       I specialize in designing, training, and deploying solutions that simplify complexity, drive innovation, and create impactful results.
-                    </p>
-                    <p>
+                    </motion.p>
+                    <motion.p variants={itemVariants}>
                       My expertise spans across <span className="text-[#9d00ff] font-semibold">Computer Vision</span> and <span className="text-[#00f3ff] font-semibold">Natural Language Processing</span>, with a particular focus on developing scalable AI solutions for real-world problems.
-                    </p>
-                  </div>
+                    </motion.p>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      {/* Enhanced Projects Section */}
+      {/* Ultra Smooth Projects Section */}
       <section id="projects" className="py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-transparent"></div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
             className="text-center mb-20"
           >
             <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent">
+              <motion.span 
+                className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ 
+                  duration: 6, 
+                  repeat: Infinity,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                style={{ backgroundSize: '200% 200%' }}
+              >
                 Projects & Portfolio
-              </span>
+              </motion.span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <motion.p 
+              className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
               Explore my collection of machine learning projects and AI innovations
-            </p>
+            </motion.p>
           </motion.div>
 
           <div className="relative">
             <motion.button 
-              whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 243, 255, 0.2)' }}
+              whileHover={{ 
+                scale: 1.1, 
+                backgroundColor: 'rgba(0, 243, 255, 0.2)',
+                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+              }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollProjects('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/60 backdrop-blur-sm p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-lg"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-2xl transition-all duration-500"
             >
               <ChevronLeft className="w-6 h-6" />
             </motion.button>
             <motion.button 
-              whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 243, 255, 0.2)' }}
+              whileHover={{ 
+                scale: 1.1, 
+                backgroundColor: 'rgba(0, 243, 255, 0.2)',
+                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+              }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollProjects('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/60 backdrop-blur-sm p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-lg"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-2xl transition-all duration-500"
             >
               <ChevronRight className="w-6 h-6" />
             </motion.button>
 
             <div 
               ref={projectsRef}
-              className="flex overflow-x-auto hide-scrollbar gap-8 pb-8 px-12"
+              className="flex overflow-x-auto hide-scrollbar gap-8 pb-8 px-12 scroll-smooth"
               style={{ scrollSnapType: 'x mandatory' }}
             >
               {projects.map((project, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ y: -10 }}
+                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.1,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  whileHover={{ 
+                    y: -15,
+                    scale: 1.02,
+                    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                  }}
+                  viewport={{ once: true }}
                   className="flex-none w-[420px] cursor-pointer group"
                   style={{ scrollSnapAlign: 'start' }}
                   onClick={handleProjectClick}
                 >
-                  <div className="relative bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#00f3ff]/5 to-[#9d00ff]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 group-hover:border-[#00f3ff]/30">
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-br from-[#00f3ff]/5 to-[#9d00ff]/5 opacity-0 group-hover:opacity-100"
+                      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    />
                     
                     <div className="relative overflow-hidden">
-                      <img
+                      <motion.img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110"
+                        className="w-full h-64 object-cover"
+                        whileHover={{ 
+                          scale: 1.15,
+                          transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                      <div className="absolute top-4 right-4">
+                      <motion.div 
+                        className="absolute top-4 right-4"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <span className="px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20">
                           {project.category}
                         </span>
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="bg-black/80 backdrop-blur-sm p-4 rounded-full">
+                      </motion.div>
+                      <motion.div 
+                        className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        <motion.div 
+                          className="bg-black/80 backdrop-blur-sm p-4 rounded-full"
+                          whileHover={{ scale: 1.1, rotate: 360 }}
+                          transition={{ duration: 0.5 }}
+                        >
                           <ExternalLink className="w-8 h-8 text-[#00f3ff]" />
-                        </div>
-                      </div>
+                        </motion.div>
+                      </motion.div>
                     </div>
 
                     <div className="p-8 space-y-6">
-                      <h3 className="text-2xl font-bold group-hover:text-[#00f3ff] transition-colors duration-300">
+                      <motion.h3 
+                        className="text-2xl font-bold group-hover:text-[#00f3ff]"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
                         {project.title}
-                      </h3>
-                      <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 leading-relaxed">
+                      </motion.h3>
+                      <motion.p 
+                        className="text-gray-400 group-hover:text-gray-300 leading-relaxed"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
                         {project.description}
-                      </p>
+                      </motion.p>
                       <div className="flex flex-wrap gap-3">
                         {project.tech.map((tech, i) => (
-                          <span
+                          <motion.span
                             key={i}
-                            className="px-4 py-2 bg-[#00f3ff]/10 rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20 group-hover:bg-[#00f3ff]/20 group-hover:border-[#00f3ff]/40 transition-all duration-300"
+                            className="px-4 py-2 bg-[#00f3ff]/10 rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20 group-hover:bg-[#00f3ff]/20 group-hover:border-[#00f3ff]/40"
+                            whileHover={{ 
+                              scale: 1.05,
+                              transition: { duration: 0.2 }
+                            }}
+                            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                           >
                             {tech}
-                          </span>
+                          </motion.span>
                         ))}
                       </div>
                     </div>
@@ -391,7 +596,12 @@ function App() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
             className="text-center mt-12"
           >
             <p className="text-gray-400 text-lg">
@@ -402,24 +612,45 @@ function App() {
         </div>
       </section>
 
-      {/* Enhanced Skills Section */}
+      {/* Ultra Smooth Skills Section */}
       <section id="skills" className="py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
             className="text-center mb-20"
           >
             <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-[#9d00ff] via-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent">
+              <motion.span 
+                className="bg-gradient-to-r from-[#9d00ff] via-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ 
+                  duration: 6, 
+                  repeat: Infinity,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                style={{ backgroundSize: '200% 200%' }}
+              >
                 Skills & Expertise
-              </span>
+              </motion.span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <motion.p 
+              className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
               Technologies and frameworks I use to bring ideas to life
-            </p>
+            </motion.p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -428,32 +659,70 @@ function App() {
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
+                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.1,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  whileHover={{ 
+                    y: -8, 
+                    scale: 1.03,
+                    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                  }}
+                  viewport={{ once: true }}
                   className="relative group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/10 to-[#9d00ff]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative bg-black/40 backdrop-blur-xl p-8 rounded-2xl border border-white/10 shadow-xl">
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/10 to-[#9d00ff]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100"
+                    transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  />
+                  <div className="relative bg-black/30 backdrop-blur-2xl p-8 rounded-2xl border border-white/10 shadow-xl transition-all duration-500 group-hover:border-[#00f3ff]/30">
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="p-3 bg-gradient-to-r from-[#00f3ff]/20 to-[#9d00ff]/20 rounded-xl">
+                      <motion.div 
+                        className="p-3 bg-gradient-to-r from-[#00f3ff]/20 to-[#9d00ff]/20 rounded-xl"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          rotate: 360,
+                          transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+                        }}
+                      >
                         <IconComponent className="w-8 h-8 text-[#00f3ff]" />
-                      </div>
+                      </motion.div>
                       <div>
                         <h3 className="text-xl font-bold text-white">{skill.name}</h3>
-                        <span className="text-[#00f3ff] font-semibold">{skill.level}%</span>
+                        <motion.span 
+                          className="text-[#00f3ff] font-semibold"
+                          animate={{ opacity: [0.7, 1, 0.7] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                          {skill.level}%
+                        </motion.span>
                       </div>
                     </div>
                     <div className="relative">
-                      <div className="w-full bg-gray-800/50 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-gray-800/50 rounded-full h-3 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                          className="h-full bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] rounded-full relative"
+                          transition={{ 
+                            duration: 2, 
+                            delay: 0.5,
+                            ease: [0.25, 0.46, 0.45, 0.94]
+                          }}
+                          viewport={{ once: true }}
+                          className="h-full bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] rounded-full relative overflow-hidden"
                         >
-                          <div className="absolute inset-0 bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] animate-pulse"></div>
+                          <motion.div 
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ 
+                              duration: 2, 
+                              repeat: Infinity,
+                              ease: [0.25, 0.46, 0.45, 0.94]
+                            }}
+                          />
                         </motion.div>
                       </div>
                     </div>
@@ -465,25 +734,46 @@ function App() {
         </div>
       </section>
 
-      {/* Enhanced Contact Section */}
+      {/* Ultra Smooth Contact Section */}
       <section id="contact" className="py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
             className="space-y-12"
           >
             <div>
               <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent">
+                <motion.span 
+                  className="bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent"
+                  animate={{ 
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  style={{ backgroundSize: '200% 200%' }}
+                >
                   Let's Connect
-                </span>
+                </motion.span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+              <motion.p 
+                className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
                 Ready to collaborate on the next breakthrough in AI and machine learning?
-              </p>
+              </motion.p>
             </div>
 
             <div className="flex justify-center gap-8">
@@ -497,18 +787,39 @@ function App() {
                   href={social.href}
                   target={social.icon !== Mail ? "_blank" : undefined}
                   rel={social.icon !== Mail ? "noopener noreferrer" : undefined}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -5 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.1,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  whileHover={{ 
+                    scale: 1.15, 
+                    y: -10,
+                    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  viewport={{ once: true }}
                   className="group relative"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/20 to-[#9d00ff]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl group-hover:border-[#00f3ff]/30 transition-all duration-300">
-                    <social.icon className="w-10 h-10 text-[#00f3ff] group-hover:text-white transition-colors duration-300" />
-                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/20 to-[#9d00ff]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100"
+                    transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  />
+                  <div className="relative bg-black/30 backdrop-blur-2xl p-6 rounded-2xl border border-white/10 shadow-xl group-hover:border-[#00f3ff]/30 transition-all duration-500">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
+                      <social.icon className="w-10 h-10 text-[#00f3ff] group-hover:text-white transition-colors duration-500" />
+                    </motion.div>
+                    <motion.span 
+                      className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 whitespace-nowrap"
+                      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
                       {social.label}
-                    </span>
+                    </motion.span>
                   </div>
                 </motion.a>
               ))}
@@ -517,14 +828,18 @@ function App() {
         </div>
       </section>
 
-      {/* Enhanced Footer */}
+      {/* Ultra Smooth Footer */}
       <footer className="py-12 border-t border-white/5 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
             className="text-gray-400 text-lg"
           >
             © {new Date().getFullYear()} Muhammad Alvaro Khikman. Crafted with passion and precision.

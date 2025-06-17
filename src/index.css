@@ -14,55 +14,75 @@
   scroll-behavior: smooth;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: linear-gradient(135deg, #0a0a0a 0%, #0f0f0f 50%, #1a1a1a 100%);
   color: #ffffff;
   font-family: 'Inter', sans-serif;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Enhanced scrollbar */
+/* Ultra smooth scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
-  border-radius: 4px;
+  border-radius: 5px;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--neon-purple), var(--neon-blue));
+  transform: scale(1.1);
 }
 
-/* Enhanced gradient text */
+/* Enhanced smooth scrolling for all elements */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Ultra smooth gradient text with enhanced animation */
 .gradient-text {
   background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-blue) 100%);
-  background-size: 200% 200%;
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradientShift 4s ease-in-out infinite;
+  animation: gradientShift 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 @keyframes gradientShift {
   0%, 100% {
     background-position: 0% 50%;
   }
+  25% {
+    background-position: 100% 0%;
+  }
   50% {
-    background-position: 100% 50%;
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
   }
 }
 
-/* Enhanced neon effects */
+/* Ultra smooth neon effects */
 .neon-border {
   position: relative;
   overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .neon-border::before {
@@ -72,8 +92,8 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.4), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.6), transparent);
+  transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .neon-border:hover::before {
@@ -94,27 +114,28 @@ body {
   -webkit-mask-composite: exclude;
   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  animation: neonPulse 3s infinite;
+  animation: neonPulse 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
   pointer-events: none;
 }
 
 @keyframes neonPulse {
   0%, 100% {
-    opacity: 0.5;
+    opacity: 0.3;
     filter: blur(0px);
   }
   50% {
     opacity: 1;
-    filter: blur(1px);
+    filter: blur(2px);
   }
 }
 
-/* Enhanced project cards */
+/* Ultra smooth project cards */
 .project-card {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(30px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
+  border-radius: 24px;
 }
 
 .project-card::before {
@@ -122,12 +143,12 @@ body {
   position: absolute;
   inset: 0;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(0, 243, 255, 0.3), rgba(157, 0, 255, 0.3));
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.4), rgba(157, 0, 255, 0.4));
   border-radius: inherit;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .project-card:hover::before {
@@ -135,19 +156,20 @@ body {
 }
 
 .project-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-12px) scale(1.03);
   box-shadow: 
-    0 20px 40px rgba(0, 243, 255, 0.1),
-    0 0 60px rgba(157, 0, 255, 0.1);
+    0 25px 50px rgba(0, 243, 255, 0.15),
+    0 0 80px rgba(157, 0, 255, 0.15);
 }
 
-/* Enhanced skill bars */
+/* Ultra smooth skill bars */
 .skill-bar {
-  height: 8px;
+  height: 10px;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-  border-radius: 4px;
+  border-radius: 5px;
   position: relative;
   overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .skill-bar::after {
@@ -157,8 +179,8 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmer 2s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 @keyframes shimmer {
@@ -170,66 +192,215 @@ body {
   }
 }
 
-/* Hide scrollbar utility */
+/* Hide scrollbar utility with smooth scrolling */
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Enhanced animations */
+/* Ultra smooth scroll snapping */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced smooth animations */
 @keyframes float {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
-  50% {
-    transform: translateY(-10px);
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
   }
 }
 
 .float-animation {
-  animation: float 3s ease-in-out infinite;
+  animation: float 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
-/* Improved text selection */
+/* Ultra smooth text selection */
 ::selection {
-  background: rgba(0, 243, 255, 0.3);
+  background: rgba(0, 243, 255, 0.4);
   color: white;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 ::-moz-selection {
-  background: rgba(0, 243, 255, 0.3);
+  background: rgba(0, 243, 255, 0.4);
   color: white;
 }
 
-/* Enhanced focus states */
+/* Enhanced smooth focus states */
 button:focus,
 a:focus {
   outline: 2px solid var(--neon-blue);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Smooth transitions for all interactive elements */
+/* Ultra smooth transitions for all interactive elements */
 button,
 a,
 .project-card,
-.skill-bar {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.skill-bar,
+input,
+textarea {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Enhanced backdrop blur support */
-@supports (backdrop-filter: blur(20px)) {
+/* Enhanced backdrop blur support with smooth transitions */
+@supports (backdrop-filter: blur(30px)) {
   .backdrop-blur-xl {
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
+    transition: backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(40px);
+    transition: backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 }
 
 /* Fallback for browsers without backdrop-filter support */
-@supports not (backdrop-filter: blur(20px)) {
+@supports not (backdrop-filter: blur(30px)) {
   .backdrop-blur-xl {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  .backdrop-blur-2xl {
     background: rgba(0, 0, 0, 0.8);
   }
+}
+
+/* Ultra smooth hover effects for buttons */
+button:hover,
+a:hover {
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced smooth loading animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Ultra smooth scale animations */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.scale-in {
+  animation: scaleIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Enhanced smooth rotation animations */
+@keyframes smoothRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.smooth-rotate {
+  animation: smoothRotate 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+/* Ultra smooth page transitions */
+.page-transition {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced smooth image loading */
+img {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+img:hover {
+  filter: brightness(1.1) contrast(1.05);
+}
+
+/* Ultra smooth border animations */
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(0, 243, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+  }
+  50% {
+    border-color: rgba(157, 0, 255, 0.5);
+    box-shadow: 0 0 30px rgba(157, 0, 255, 0.2);
+  }
+}
+
+.border-glow {
+  animation: borderGlow 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+/* Enhanced smooth card hover effects */
+.card-hover {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Ultra smooth text animations */
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 243, 255, 0.8), 0 0 30px rgba(157, 0, 255, 0.5);
+  }
+}
+
+.text-glow {
+  animation: textGlow 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+/* Enhanced smooth modal transitions */
+.modal-transition {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Ultra smooth loading spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
