@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu } from 'lucide-react';
+import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu, TrendingUp, BarChart3 } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
   });
 
   const projectsRef = useRef<HTMLDivElement>(null);
+  const timeSeriesProjectsRef = useRef<HTMLDivElement>(null);
 
   const scrollProjects = (direction: 'left' | 'right') => {
     if (projectsRef.current) {
@@ -18,8 +19,19 @@ function App() {
     }
   };
 
+  const scrollTimeSeriesProjects = (direction: 'left' | 'right') => {
+    if (timeSeriesProjectsRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400;
+      timeSeriesProjectsRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   const handleProjectClick = () => {
     window.open('https://www.kaggle.com/muhammadalvaro', '_blank');
+  };
+
+  const handleTimeSeriesProjectClick = (url: string) => {
+    window.open(url, '_blank');
   };
 
   const projects = [
@@ -64,6 +76,57 @@ function App() {
       image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       tech: ["BERT", "NLP", "Transformers"],
       category: "Legal Tech"
+    }
+  ];
+
+  const timeSeriesProjects = [
+    {
+      title: "Simple Moving Average",
+      description: "Implementation of Simple Moving Average technique for time series forecasting and trend analysis in Python",
+      image: "/assets/simple_moving_average.png",
+      tech: ["Python", "Pandas", "NumPy"],
+      category: "Time Series",
+      url: "https://www.kaggle.com/code/muhammadalvaro/simple-moving-average-in-python"
+    },
+    {
+      title: "Simple Exponential Smoothing",
+      description: "Advanced exponential smoothing method for forecasting with weighted historical observations",
+      image: "/assets/simple_exponential_smoothing.png",
+      tech: ["Python", "Statsmodels", "Matplotlib"],
+      category: "Forecasting",
+      url: "https://www.kaggle.com/code/muhammadalvaro/simple-exponential-smoothing-in-python"
+    },
+    {
+      title: "Double Exponential Smoothing",
+      description: "Holt's linear trend method for time series with trend components and seasonal patterns",
+      image: "/assets/double_exponential_smoothing.png",
+      tech: ["Python", "Scipy", "Seaborn"],
+      category: "Forecasting",
+      url: "https://www.kaggle.com/code/muhammadalvaro/double-exponential-smoothing-in-python"
+    },
+    {
+      title: "Triple Exponential Smoothing",
+      description: "Holt-Winters method for complex time series with trend and seasonal components",
+      image: "/assets/triple_exponential_smoothing.png",
+      tech: ["Python", "Statsmodels", "Plotly"],
+      category: "Forecasting",
+      url: "https://www.kaggle.com/code/muhammadalvaro/triple-exponential-smoothing-in-python"
+    },
+    {
+      title: "ARIMA Model",
+      description: "AutoRegressive Integrated Moving Average model for sophisticated time series forecasting",
+      image: "/assets/ARIMA.png",
+      tech: ["Python", "ARIMA", "Statsmodels"],
+      category: "Time Series",
+      url: "https://www.kaggle.com/code/muhammadalvaro/arima-in-python"
+    },
+    {
+      title: "Sentiment Analysis",
+      description: "Comprehensive sentiment analysis of President Prabowo's responses using advanced NLP techniques",
+      image: "/assets/sentiment_analysist.png",
+      tech: ["Python", "NLTK", "TextBlob"],
+      category: "NLP",
+      url: "https://www.kaggle.com/code/muhammadalvaro/sentiment-analysis-of-presiden-prabowo-menjawab"
     }
   ];
 
@@ -467,7 +530,8 @@ function App() {
             </motion.p>
           </motion.div>
 
-          <div className="relative">
+          {/* First Row - Main Projects */}
+          <div className="relative mb-20">
             <motion.button 
               whileHover={{ 
                 scale: 1.1, 
@@ -533,6 +597,7 @@ function App() {
                           scale: 1.15,
                           transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
                         }}
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                       <motion.div 
@@ -593,6 +658,185 @@ function App() {
             </div>
           </div>
 
+          {/* Second Row - Time Series & Analytics Projects */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              >
+                <TrendingUp className="w-8 h-8 text-[#9d00ff]" />
+              </motion.div>
+              <h3 className="text-3xl lg:text-4xl font-bold">
+                <motion.span 
+                  className="bg-gradient-to-r from-[#9d00ff] via-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent"
+                  animate={{ 
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  style={{ backgroundSize: '200% 200%' }}
+                >
+                  Time Series & Analytics
+                </motion.span>
+              </h3>
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              >
+                <BarChart3 className="w-8 h-8 text-[#00f3ff]" />
+              </motion.div>
+            </div>
+            <motion.p 
+              className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Advanced forecasting models and sentiment analysis implementations
+            </motion.p>
+          </motion.div>
+
+          <div className="relative">
+            <motion.button 
+              whileHover={{ 
+                scale: 1.1, 
+                backgroundColor: 'rgba(157, 0, 255, 0.2)',
+                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+              }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => scrollTimeSeriesProjects('left')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#9d00ff] border border-[#9d00ff]/20 shadow-2xl transition-all duration-500"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </motion.button>
+            <motion.button 
+              whileHover={{ 
+                scale: 1.1, 
+                backgroundColor: 'rgba(157, 0, 255, 0.2)',
+                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+              }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => scrollTimeSeriesProjects('right')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#9d00ff] border border-[#9d00ff]/20 shadow-2xl transition-all duration-500"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </motion.button>
+
+            <div 
+              ref={timeSeriesProjectsRef}
+              className="flex overflow-x-auto hide-scrollbar gap-8 pb-8 px-12 scroll-smooth"
+              style={{ scrollSnapType: 'x mandatory' }}
+            >
+              {timeSeriesProjects.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.1,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  whileHover={{ 
+                    y: -15,
+                    scale: 1.02,
+                    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                  }}
+                  viewport={{ once: true }}
+                  className="flex-none w-[420px] cursor-pointer group"
+                  style={{ scrollSnapAlign: 'start' }}
+                  onClick={() => handleTimeSeriesProjectClick(project.url)}
+                >
+                  <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 group-hover:border-[#9d00ff]/30">
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-br from-[#9d00ff]/5 to-[#00f3ff]/5 opacity-0 group-hover:opacity-100"
+                      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    />
+                    
+                    <div className="relative overflow-hidden">
+                      <motion.img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-64 object-cover"
+                        whileHover={{ 
+                          scale: 1.15,
+                          transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+                        }}
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                      <motion.div 
+                        className="absolute top-4 right-4"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <span className="px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-[#9d00ff] text-sm border border-[#9d00ff]/20">
+                          {project.category}
+                        </span>
+                      </motion.div>
+                      <motion.div 
+                        className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        <motion.div 
+                          className="bg-black/80 backdrop-blur-sm p-4 rounded-full"
+                          whileHover={{ scale: 1.1, rotate: 360 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <ExternalLink className="w-8 h-8 text-[#9d00ff]" />
+                        </motion.div>
+                      </motion.div>
+                    </div>
+
+                    <div className="p-8 space-y-6">
+                      <motion.h3 
+                        className="text-2xl font-bold group-hover:text-[#9d00ff]"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        {project.title}
+                      </motion.h3>
+                      <motion.p 
+                        className="text-gray-400 group-hover:text-gray-300 leading-relaxed"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        {project.description}
+                      </motion.p>
+                      <div className="flex flex-wrap gap-3">
+                        {project.tech.map((tech, i) => (
+                          <motion.span
+                            key={i}
+                            className="px-4 py-2 bg-[#9d00ff]/10 rounded-full text-[#9d00ff] text-sm border border-[#9d00ff]/20 group-hover:bg-[#9d00ff]/20 group-hover:border-[#9d00ff]/40"
+                            whileHover={{ 
+                              scale: 1.05,
+                              transition: { duration: 0.2 }
+                            }}
+                            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                          >
+                            {tech}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -605,7 +849,7 @@ function App() {
             className="text-center mt-12"
           >
             <p className="text-gray-400 text-lg">
-              Click on any project to explore more details on 
+              Click on any project to explore detailed implementations on 
               <span className="text-[#00f3ff] font-semibold ml-1">Kaggle</span>
             </p>
           </motion.div>
