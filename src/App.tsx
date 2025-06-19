@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu, TrendingUp, BarChart3, Award, CheckCircle } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu, Award, Eye, EyeOff, MousePointer2, Zap, Star, Rocket } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
 function App() {
@@ -9,8 +9,58 @@ function App() {
     threshold: 0.1
   });
 
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [typedText, setTypedText] = useState('');
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
   const projectsRef = useRef<HTMLDivElement>(null);
-  const timeSeriesProjectsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+  const yTransform = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
+  // Typewriter effect for hero subtitle
+  const fullText = "Code, Data, and the Future: All Connected";
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index <= fullText.length) {
+        setTypedText(fullText.slice(0, index));
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Real-time clock
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Mouse tracking
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Easter egg trigger
+  const handleLogoClick = () => {
+    setClickCount(prev => prev + 1);
+    if (clickCount >= 4) {
+      setShowEasterEgg(true);
+      setTimeout(() => setShowEasterEgg(false), 3000);
+      setClickCount(0);
+    }
+  };
 
   const scrollProjects = (direction: 'left' | 'right') => {
     if (projectsRef.current) {
@@ -19,89 +69,83 @@ function App() {
     }
   };
 
-  const scrollTimeSeriesProjects = (direction: 'left' | 'right') => {
-    if (timeSeriesProjectsRef.current) {
-      const scrollAmount = direction === 'left' ? -400 : 400;
-      timeSeriesProjectsRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
-  const handleProjectClick = () => {
-    window.open('https://www.kaggle.com/muhammadalvaro', '_blank');
-  };
-
-  const handleTimeSeriesProjectClick = (url: string) => {
+  const handleProjectClick = (url: string) => {
     window.open(url, '_blank');
   };
 
-  const projects = [
+  const mlProjects = [
     {
       title: "IndoBERT Text Classification",
       description: "Achieved 85% accuracy in Indonesian text classification using fine-tuned BERT model with advanced preprocessing techniques",
       image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       tech: ["PyTorch", "Transformers", "BERT"],
-      category: "NLP"
+      category: "NLP",
+      url: "https://www.kaggle.com/muhammadalvaro"
     },
     {
       title: "Computer Vision RAG System",
       description: "Developed a sophisticated Retrieval-Augmented Generation system for enhanced multimodal understanding",
       image: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       tech: ["OpenAI", "Langchain", "CLIP"],
-      category: "Computer Vision"
+      category: "Computer Vision",
+      url: "https://www.kaggle.com/muhammadalvaro"
     },
     {
       title: "ASL Education & Detection",
       description: "AI-powered system for American Sign Language learning with real-time gesture recognition capabilities",
       image: "https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       tech: ["TensorFlow", "OpenCV", "ResNet"],
-      category: "Computer Vision"
+      category: "Computer Vision",
+      url: "https://www.kaggle.com/muhammadalvaro"
     },
     {
       title: "AI-Powered Healthcare Analytics",
       description: "Developed predictive models for early disease detection using advanced medical imaging analysis",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       tech: ["PyTorch", "Medical Imaging", "CNN"],
-      category: "Healthcare AI"
-    },
-    {
-      title: "Autonomous Drone Navigation",
-      description: "Implemented real-time object detection and intelligent path planning for autonomous drone systems",
-      image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      tech: ["YOLO", "ROS", "Path Planning"],
-      category: "Robotics"
+      category: "Healthcare AI",
+      url: "https://www.kaggle.com/muhammadalvaro"
     },
     {
       title: "Sentiment Analysis",
-      description: "Comprehensive sentiment analysis of President Prabowo's responses using advanced NLP techniques",
-      image: "/assets/sentiment_analysist.png",
-      tech: ["Python", "NLTK", "TextBlob"],
+      description: "Advanced sentiment analysis of Indonesian political discourse using state-of-the-art NLP techniques",
+      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      tech: ["BERT", "NLP", "Transformers"],
       category: "NLP",
       url: "https://www.kaggle.com/code/muhammadalvaro/sentiment-analysis-of-presiden-prabowo-menjawab"
+    },
+    {
+      title: "NLP for Legal Documents",
+      description: "Created an intelligent AI system for analyzing, summarizing and extracting insights from legal documents",
+      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      tech: ["BERT", "NLP", "Transformers"],
+      category: "Legal Tech",
+      url: "https://www.kaggle.com/muhammadalvaro"
     }
   ];
 
   const timeSeriesProjects = [
     {
       title: "Simple Moving Average",
-      description: "Implementation of Simple Moving Average technique for time series forecasting and trend analysis in Python",
+      description: "Implementation of Simple Moving Average for time series forecasting with comprehensive analysis and visualization",
       image: "/assets/simple_moving_average.png",
-      tech: ["Python", "Pandas", "NumPy"],
+      tech: ["Python", "Pandas", "Matplotlib"],
       category: "Time Series",
       url: "https://www.kaggle.com/code/muhammadalvaro/simple-moving-average-in-python"
     },
     {
       title: "Simple Exponential Smoothing",
-      description: "Advanced exponential smoothing method for forecasting with weighted historical observations",
+      description: "Advanced exponential smoothing techniques for accurate time series prediction and trend analysis",
       image: "/assets/simple_exponential_smoothing.png",
-      tech: ["Python", "Statsmodels", "Matplotlib"],
+      tech: ["Python", "Statsmodels", "NumPy"],
       category: "Forecasting",
       url: "https://www.kaggle.com/code/muhammadalvaro/simple-exponential-smoothing-in-python"
     },
     {
       title: "Double Exponential Smoothing",
-      description: "Holt's linear trend method for time series with trend components and seasonal patterns",
+      description: "Holt's method implementation for time series with trend components and seasonal patterns",
       image: "/assets/double_exponential_smoothing.png",
-      tech: ["Python", "Scipy", "Seaborn"],
+      tech: ["Python", "Scipy", "Plotly"],
       category: "Forecasting",
       url: "https://www.kaggle.com/code/muhammadalvaro/double-exponential-smoothing-in-python"
     },
@@ -109,7 +153,7 @@ function App() {
       title: "Triple Exponential Smoothing",
       description: "Holt-Winters method for complex time series with trend and seasonal components",
       image: "/assets/triple_exponential_smoothing.png",
-      tech: ["Python", "Statsmodels", "Plotly"],
+      tech: ["Python", "Statsmodels", "Seaborn"],
       category: "Forecasting",
       url: "https://www.kaggle.com/code/muhammadalvaro/triple-exponential-smoothing-in-python"
     },
@@ -118,7 +162,7 @@ function App() {
       description: "AutoRegressive Integrated Moving Average model for sophisticated time series forecasting",
       image: "/assets/ARIMA.png",
       tech: ["Python", "ARIMA", "Statsmodels"],
-      category: "Time Series",
+      category: "Advanced Forecasting",
       url: "https://www.kaggle.com/code/muhammadalvaro/arima-in-python"
     }
   ];
@@ -150,12 +194,12 @@ function App() {
         "K-Means Clustering",
         "Hierarchical Clustering", 
         "DBSCAN",
-        "Gaussian Mixture Model / GMM",
+        "Gaussian Mixture Model (GMM)",
         "PCA – Principal Component Analysis",
         "t-SNE – t-Distributed Stochastic Neighbor Embedding",
         "Autoencoder",
         "Isolation Forest",
-        "Self-Organizing Map / SOM",
+        "Self-Organizing Map (SOM)",
         "Spectral Clustering"
       ]
     },
@@ -164,40 +208,40 @@ function App() {
       level: 90, 
       icon: Sparkles,
       details: [
-        "➤ Klasifikasi (Classification):",
-        "Logistic Regression",
-        "Decision Tree Classifier",
-        "Random Forest Classifier",
-        "K-Nearest Neighbors / KNN",
-        "Support Vector Machine / SVM",
-        "Naive Bayes",
-        "Gradient Boosting Classifier – XGBoost, LightGBM, CatBoost",
-        "Neural Network Classifier",
+        "➤ Classification:",
+        "• Logistic Regression",
+        "• Decision Tree Classifier",
+        "• Random Forest Classifier",
+        "• K-Nearest Neighbors (KNN)",
+        "• Support Vector Machine (SVM)",
+        "• Naive Bayes",
+        "• Gradient Boosting (XGBoost, LightGBM, CatBoost)",
+        "• Neural Network Classifier",
         "",
-        "➤ Regresi (Regression):",
-        "Linear Regression",
-        "Ridge Regression",
-        "Lasso Regression",
-        "SVR – Support Vector Regression",
-        "Decision Tree Regressor",
-        "Random Forest Regressor",
-        "Gradient Boosting Regressor",
-        "Neural Network Regressor"
+        "➤ Regression:",
+        "• Linear Regression",
+        "• Ridge Regression",
+        "• Lasso Regression",
+        "• SVR – Support Vector Regression",
+        "• Decision Tree Regressor",
+        "• Random Forest Regressor",
+        "• Gradient Boosting Regressor",
+        "• Neural Network Regressor"
       ]
     },
     { 
-      name: "Neural Network", 
+      name: "Neural Networks", 
       level: 90, 
       icon: Brain,
       details: [
-        "Feedforward Neural Network / FNN",
-        "Multilayer Perceptron / MLP",
-        "Convolutional Neural Network / CNN",
-        "Recurrent Neural Network / RNN",
-        "Long Short-Term Memory / LSTM",
-        "Gated Recurrent Unit / GRU",
+        "Feedforward Neural Network (FNN)",
+        "Multilayer Perceptron (MLP)",
+        "Convolutional Neural Network (CNN)",
+        "Recurrent Neural Network (RNN)",
+        "Long Short-Term Memory (LSTM)",
+        "Gated Recurrent Unit (GRU)",
         "Transformer",
-        "Bidirectional LSTM / BiLSTM"
+        "Bidirectional LSTM (BiLSTM)"
       ]
     }
   ];
@@ -210,7 +254,7 @@ function App() {
     },
     {
       title: "Custom Models, Layers, and Loss Functions with TensorFlow",
-      date: "Nov 2024",
+      date: "Nov 2024", 
       url: "https://coursera.org/share/145856427b3503fb25f62926f225b0a2"
     },
     {
@@ -299,9 +343,49 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0f0f0f] to-[#1a1a1a] text-white overflow-x-hidden">
+      {/* Custom Cursor */}
+      <motion.div
+        className="fixed w-6 h-6 pointer-events-none z-[9999] mix-blend-difference"
+        animate={{
+          x: mousePosition.x - 12,
+          y: mousePosition.y - 12,
+          scale: isHovering ? 2 : 1
+        }}
+        transition={{ type: "spring", stiffness: 500, damping: 28 }}
+      >
+        <div className="w-full h-full bg-[#00f3ff] rounded-full opacity-80" />
+      </motion.div>
+
+      {/* Easter Egg Animation */}
+      <AnimatePresence>
+        {showEasterEgg && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center"
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              className="text-8xl"
+            >
+              🚀
+            </motion.div>
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="absolute mt-32 text-2xl font-bold bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent"
+            >
+              Ready for Launch! 🌟
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Enhanced Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none">
-        {[...Array(25)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-[#00f3ff] rounded-full"
@@ -309,7 +393,7 @@ function App() {
               x: [0, Math.random() * 100 - 50],
               y: [0, Math.random() * 100 - 50],
               opacity: [0.2, 0.8, 0.2],
-              scale: [0.5, 1.2, 0.5]
+              scale: [0.5, 1.5, 0.5]
             }}
             transition={{
               duration: Math.random() * 4 + 3,
@@ -325,7 +409,13 @@ function App() {
         ))}
       </div>
 
-      {/* Ultra Smooth Navbar */}
+      {/* Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] z-50 origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      {/* Ultra Smooth Navbar with Real-time Clock */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -334,7 +424,7 @@ function App() {
           ease: [0.25, 0.46, 0.45, 0.94],
           delay: 0.2
         }}
-        className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-2xl border-b border-white/5"
+        className="fixed top-0 left-0 right-0 z-40 bg-black/10 backdrop-blur-2xl border-b border-white/5"
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
@@ -343,12 +433,27 @@ function App() {
                 scale: 1.05,
                 transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
               }}
-              className="text-[#00f3ff] font-bold text-2xl tracking-wide"
+              onClick={handleLogoClick}
+              className="text-[#00f3ff] font-bold text-2xl tracking-wide cursor-pointer"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
             >
               <span className="bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent">
                 We Are Interconnected
               </span>
             </motion.div>
+            
+            {/* Real-time Clock */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="hidden md:flex items-center gap-2 text-sm text-gray-400"
+            >
+              <Zap className="w-4 h-4 text-[#00f3ff]" />
+              <span>{currentTime.toLocaleTimeString()}</span>
+            </motion.div>
+
             <motion.div 
               variants={containerVariants}
               initial="hidden"
@@ -366,6 +471,8 @@ function App() {
                     transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
                   }}
                   whileTap={{ scale: 0.95 }}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
                   className="text-gray-300 hover:text-[#00f3ff] transition-all duration-500 font-medium tracking-wide relative group"
                 >
                   {item}
@@ -384,7 +491,7 @@ function App() {
         </div>
       </motion.nav>
 
-      {/* Ultra Smooth Hero Section */}
+      {/* Ultra Smooth Hero Section with Typewriter Effect */}
       <motion.section
         id="about"
         ref={heroRef}
@@ -392,6 +499,7 @@ function App() {
         animate={heroInView ? { opacity: 1 } : {}}
         transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
+        style={{ y: yTransform }}
       >
         {/* Enhanced Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
@@ -447,10 +555,11 @@ function App() {
                 className="space-y-2"
               >
                 <motion.h2 
-                  className="text-2xl font-light text-[#00f3ff] tracking-wider"
+                  className="text-2xl font-light text-[#00f3ff] tracking-wider flex items-center gap-2"
                   animate={{ opacity: [0.7, 1, 0.7] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 >
+                  <Star className="w-6 h-6" />
                   Hello, I'm
                 </motion.h2>
                 <h1 className="text-6xl lg:text-8xl font-bold leading-tight">
@@ -486,11 +595,12 @@ function App() {
                   </motion.span>
                 </h1>
                 <motion.h3 
-                  className="text-3xl font-light text-gray-300 tracking-wide"
+                  className="text-3xl font-light text-gray-300 tracking-wide flex items-center gap-2"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1, duration: 1 }}
                 >
+                  <Rocket className="w-8 h-8 text-[#9d00ff]" />
                   Machine Learning Engineer
                 </motion.h3>
               </motion.div>
@@ -503,9 +613,16 @@ function App() {
                   delay: 0.7,
                   ease: [0.25, 0.46, 0.45, 0.94]
                 }}
-                className="text-xl text-gray-400 leading-relaxed max-w-lg"
+                className="text-xl text-gray-400 leading-relaxed max-w-lg font-mono"
               >
-                "Code, Data, and the Future: All Connected"
+                "{typedText}"
+                <motion.span
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="text-[#00f3ff]"
+                >
+                  |
+                </motion.span>
               </motion.p>
 
               <motion.div
@@ -548,6 +665,8 @@ function App() {
                   scale: 1.02,
                   transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
                 }}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
                 className="relative"
               >
                 <motion.div 
@@ -642,278 +761,195 @@ function App() {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Explore my comprehensive collection of machine learning projects and AI innovations
+              Explore my collection of machine learning projects and AI innovations
             </motion.p>
           </motion.div>
 
           {/* Machine Learning & AI Section */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 1,
-              ease: [0.25, 0.46, 0.45, 0.94]
-            }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="mb-20"
           >
-            <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-8">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
                 <Brain className="w-8 h-8 text-[#00f3ff]" />
               </motion.div>
-              <h3 className="text-3xl lg:text-4xl font-bold">
-                <motion.span 
-                  className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent"
-                  animate={{ 
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                  }}
-                  transition={{ 
-                    duration: 5, 
-                    repeat: Infinity,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  style={{ backgroundSize: '200% 200%' }}
-                >
-                  Machine Learning & AI
-                </motion.span>
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent">
+                Machine Learning & AI
               </h3>
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <Sparkles className="w-8 h-8 text-[#9d00ff]" />
-              </motion.div>
             </div>
-            <motion.p 
-              className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              Advanced AI systems, computer vision, and natural language processing solutions
-            </motion.p>
-          </motion.div>
+            <p className="text-gray-400 mb-8 max-w-3xl">
+              Advanced AI solutions and machine learning models for complex problem-solving and intelligent automation
+            </p>
 
-          {/* First Row - ML & AI Projects */}
-          <div className="relative mb-20">
-            <motion.button 
-              whileHover={{ 
-                scale: 1.1, 
-                backgroundColor: 'rgba(0, 243, 255, 0.2)',
-                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollProjects('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-2xl transition-all duration-500"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </motion.button>
-            <motion.button 
-              whileHover={{ 
-                scale: 1.1, 
-                backgroundColor: 'rgba(0, 243, 255, 0.2)',
-                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollProjects('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-2xl transition-all duration-500"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </motion.button>
+            <div className="relative">
+              <motion.button 
+                whileHover={{ 
+                  scale: 1.1, 
+                  backgroundColor: 'rgba(0, 243, 255, 0.2)',
+                  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollProjects('left')}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-2xl transition-all duration-500"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </motion.button>
+              <motion.button 
+                whileHover={{ 
+                  scale: 1.1, 
+                  backgroundColor: 'rgba(0, 243, 255, 0.2)',
+                  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollProjects('right')}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#00f3ff] border border-[#00f3ff]/20 shadow-2xl transition-all duration-500"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </motion.button>
 
-            <div 
-              ref={projectsRef}
-              className="flex overflow-x-auto hide-scrollbar gap-8 pb-8 px-12 scroll-smooth"
-              style={{ scrollSnapType: 'x mandatory' }}
-            >
-              {projects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ 
-                    duration: 0.8, 
-                    delay: index * 0.1,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  whileHover={{ 
-                    y: -15,
-                    scale: 1.02,
-                    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
-                  }}
-                  viewport={{ once: true }}
-                  className="flex-none w-[420px] cursor-pointer group"
-                  style={{ scrollSnapAlign: 'start' }}
-                  onClick={() => project.url ? handleTimeSeriesProjectClick(project.url) : handleProjectClick()}
-                >
-                  <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 group-hover:border-[#00f3ff]/30">
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-br from-[#00f3ff]/5 to-[#9d00ff]/5 opacity-0 group-hover:opacity-100"
-                      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    />
-                    
-                    <div className="relative overflow-hidden">
-                      <motion.img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-64 object-cover"
-                        whileHover={{ 
-                          scale: 1.15,
-                          transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
-                        }}
-                        loading="lazy"
+              <div 
+                ref={projectsRef}
+                className="flex overflow-x-auto hide-scrollbar gap-8 pb-8 px-12 scroll-smooth"
+                style={{ scrollSnapType: 'x mandatory' }}
+              >
+                {mlProjects.map((project, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: index * 0.1,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }}
+                    whileHover={{ 
+                      y: -15,
+                      scale: 1.02,
+                      transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
+                    }}
+                    viewport={{ once: true }}
+                    className="flex-none w-[420px] cursor-pointer group"
+                    style={{ scrollSnapAlign: 'start' }}
+                    onClick={() => handleProjectClick(project.url)}
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                  >
+                    <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 group-hover:border-[#00f3ff]/30">
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-br from-[#00f3ff]/5 to-[#9d00ff]/5 opacity-0 group-hover:opacity-100"
+                        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                      <motion.div 
-                        className="absolute top-4 right-4"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <span className="px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20">
-                          {project.category}
-                        </span>
-                      </motion.div>
-                      <motion.div 
-                        className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
-                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      >
+                      
+                      <div className="relative overflow-hidden">
+                        <motion.img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-64 object-cover"
+                          whileHover={{ 
+                            scale: 1.15,
+                            transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+                          }}
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <motion.div 
-                          className="bg-black/80 backdrop-blur-sm p-4 rounded-full"
-                          whileHover={{ scale: 1.1, rotate: 360 }}
-                          transition={{ duration: 0.5 }}
+                          className="absolute top-4 right-4"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.3 }}
                         >
-                          <ExternalLink className="w-8 h-8 text-[#00f3ff]" />
+                          <span className="px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20">
+                            {project.category}
+                          </span>
                         </motion.div>
-                      </motion.div>
-                    </div>
-
-                    <div className="p-8 space-y-6">
-                      <motion.h3 
-                        className="text-2xl font-bold group-hover:text-[#00f3ff]"
-                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      >
-                        {project.title}
-                      </motion.h3>
-                      <motion.p 
-                        className="text-gray-400 group-hover:text-gray-300 leading-relaxed"
-                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      >
-                        {project.description}
-                      </motion.p>
-                      <div className="flex flex-wrap gap-3">
-                        {project.tech.map((tech, i) => (
-                          <motion.span
-                            key={i}
-                            className="px-4 py-2 bg-[#00f3ff]/10 rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20 group-hover:bg-[#00f3ff]/20 group-hover:border-[#00f3ff]/40"
-                            whileHover={{ 
-                              scale: 1.05,
-                              transition: { duration: 0.2 }
-                            }}
-                            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        <motion.div 
+                          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
+                          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        >
+                          <motion.div 
+                            className="bg-black/80 backdrop-blur-sm p-4 rounded-full"
+                            whileHover={{ scale: 1.1, rotate: 360 }}
+                            transition={{ duration: 0.5 }}
                           >
-                            {tech}
-                          </motion.span>
-                        ))}
+                            <ExternalLink className="w-8 h-8 text-[#00f3ff]" />
+                          </motion.div>
+                        </motion.div>
+                      </div>
+
+                      <div className="p-8 space-y-6">
+                        <motion.h3 
+                          className="text-2xl font-bold group-hover:text-[#00f3ff]"
+                          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        >
+                          {project.title}
+                        </motion.h3>
+                        <motion.p 
+                          className="text-gray-400 group-hover:text-gray-300 leading-relaxed"
+                          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        >
+                          {project.description}
+                        </motion.p>
+                        <div className="flex flex-wrap gap-3">
+                          {project.tech.map((tech, i) => (
+                            <motion.span
+                              key={i}
+                              className="px-4 py-2 bg-[#00f3ff]/10 rounded-full text-[#00f3ff] text-sm border border-[#00f3ff]/20 group-hover:bg-[#00f3ff]/20 group-hover:border-[#00f3ff]/40"
+                              whileHover={{ 
+                                scale: 1.05,
+                                transition: { duration: 0.2 }
+                              }}
+                              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                            >
+                              {tech}
+                            </motion.span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Time Series & Analytics Section */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 1,
-              ease: [0.25, 0.46, 0.45, 0.94]
-            }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="mb-12"
           >
-            <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-8">
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                <TrendingUp className="w-8 h-8 text-[#9d00ff]" />
+                <Database className="w-8 h-8 text-[#9d00ff]" />
               </motion.div>
-              <h3 className="text-3xl lg:text-4xl font-bold">
-                <motion.span 
-                  className="bg-gradient-to-r from-[#9d00ff] via-[#00f3ff] to-[#9d00ff] bg-clip-text text-transparent"
-                  animate={{ 
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                  }}
-                  transition={{ 
-                    duration: 5, 
-                    repeat: Infinity,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  style={{ backgroundSize: '200% 200%' }}
-                >
-                  Time Series & Analytics
-                </motion.span>
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent">
+                Time Series & Analytics
               </h3>
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <BarChart3 className="w-8 h-8 text-[#00f3ff]" />
-              </motion.div>
             </div>
-            <motion.p 
-              className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              Advanced forecasting models and time series analysis implementations
-            </motion.p>
-          </motion.div>
+            <p className="text-gray-400 mb-8 max-w-3xl">
+              Advanced forecasting models and time series analysis for predictive analytics and trend identification
+            </p>
 
-          {/* Second Row - Time Series Projects */}
-          <div className="relative">
-            <motion.button 
-              whileHover={{ 
-                scale: 1.1, 
-                backgroundColor: 'rgba(157, 0, 255, 0.2)',
-                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollTimeSeriesProjects('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#9d00ff] border border-[#9d00ff]/20 shadow-2xl transition-all duration-500"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </motion.button>
-            <motion.button 
-              whileHover={{ 
-                scale: 1.1, 
-                backgroundColor: 'rgba(157, 0, 255, 0.2)',
-                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollTimeSeriesProjects('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-xl p-4 rounded-full text-[#9d00ff] border border-[#9d00ff]/20 shadow-2xl transition-all duration-500"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </motion.button>
-
-            <div 
-              ref={timeSeriesProjectsRef}
-              className="flex overflow-x-auto hide-scrollbar gap-8 pb-8 px-12 scroll-smooth"
-              style={{ scrollSnapType: 'x mandatory' }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
               {timeSeriesProjects.map((project, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ 
                     duration: 0.8, 
@@ -921,16 +957,17 @@ function App() {
                     ease: [0.25, 0.46, 0.45, 0.94]
                   }}
                   whileHover={{ 
-                    y: -15,
-                    scale: 1.02,
+                    y: -10,
+                    scale: 1.03,
                     transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
                   }}
                   viewport={{ once: true }}
-                  className="flex-none w-[420px] cursor-pointer group"
-                  style={{ scrollSnapAlign: 'start' }}
-                  onClick={() => handleTimeSeriesProjectClick(project.url)}
+                  className="cursor-pointer group"
+                  onClick={() => handleProjectClick(project.url)}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
                 >
-                  <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 group-hover:border-[#9d00ff]/30">
+                  <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-2xl overflow-hidden border border-white/10 shadow-xl transition-all duration-700 group-hover:border-[#9d00ff]/30">
                     <motion.div 
                       className="absolute inset-0 bg-gradient-to-br from-[#9d00ff]/5 to-[#00f3ff]/5 opacity-0 group-hover:opacity-100"
                       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -940,20 +977,20 @@ function App() {
                       <motion.img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-64 object-cover"
+                        className="w-full h-48 object-cover"
                         whileHover={{ 
-                          scale: 1.15,
+                          scale: 1.1,
                           transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
                         }}
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                       <motion.div 
-                        className="absolute top-4 right-4"
+                        className="absolute top-3 right-3"
                         whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <span className="px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-[#9d00ff] text-sm border border-[#9d00ff]/20">
+                        <span className="px-2 py-1 bg-black/60 backdrop-blur-sm rounded-full text-[#9d00ff] text-xs border border-[#9d00ff]/20">
                           {project.category}
                         </span>
                       </motion.div>
@@ -962,33 +999,33 @@ function App() {
                         transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                       >
                         <motion.div 
-                          className="bg-black/80 backdrop-blur-sm p-4 rounded-full"
+                          className="bg-black/80 backdrop-blur-sm p-3 rounded-full"
                           whileHover={{ scale: 1.1, rotate: 360 }}
                           transition={{ duration: 0.5 }}
                         >
-                          <ExternalLink className="w-8 h-8 text-[#9d00ff]" />
+                          <ExternalLink className="w-6 h-6 text-[#9d00ff]" />
                         </motion.div>
                       </motion.div>
                     </div>
 
-                    <div className="p-8 space-y-6">
-                      <motion.h3 
-                        className="text-2xl font-bold group-hover:text-[#9d00ff]"
+                    <div className="p-6 space-y-4">
+                      <motion.h4 
+                        className="text-lg font-bold group-hover:text-[#9d00ff] line-clamp-2"
                         transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                       >
                         {project.title}
-                      </motion.h3>
+                      </motion.h4>
                       <motion.p 
-                        className="text-gray-400 group-hover:text-gray-300 leading-relaxed"
+                        className="text-gray-400 group-hover:text-gray-300 text-sm leading-relaxed line-clamp-3"
                         transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                       >
                         {project.description}
                       </motion.p>
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-2">
                         {project.tech.map((tech, i) => (
                           <motion.span
                             key={i}
-                            className="px-4 py-2 bg-[#9d00ff]/10 rounded-full text-[#9d00ff] text-sm border border-[#9d00ff]/20 group-hover:bg-[#9d00ff]/20 group-hover:border-[#9d00ff]/40"
+                            className="px-3 py-1 bg-[#9d00ff]/10 rounded-full text-[#9d00ff] text-xs border border-[#9d00ff]/20 group-hover:bg-[#9d00ff]/20 group-hover:border-[#9d00ff]/40"
                             whileHover={{ 
                               scale: 1.05,
                               transition: { duration: 0.2 }
@@ -1004,7 +1041,7 @@ function App() {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1018,14 +1055,14 @@ function App() {
             className="text-center mt-12"
           >
             <p className="text-gray-400 text-lg">
-              Click on any project to explore detailed implementations on 
+              Click on any project to explore more details on 
               <span className="text-[#00f3ff] font-semibold ml-1">Kaggle</span>
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Enhanced Skills Section */}
+      {/* Ultra Smooth Skills Section with Expandable Details */}
       <section id="skills" className="py-32 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
         <div className="container mx-auto px-6 relative z-10">
@@ -1069,6 +1106,8 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {skills.map((skill, index) => {
               const IconComponent = skill.icon;
+              const [isExpanded, setIsExpanded] = useState(false);
+              
               return (
                 <motion.div
                   key={index}
@@ -1103,7 +1142,7 @@ function App() {
                       >
                         <IconComponent className="w-8 h-8 text-[#00f3ff]" />
                       </motion.div>
-                      <div>
+                      <div className="flex-1">
                         <h3 className="text-xl font-bold text-white">{skill.name}</h3>
                         <motion.span 
                           className="text-[#00f3ff] font-semibold"
@@ -1113,9 +1152,26 @@ function App() {
                           {skill.level}%
                         </motion.span>
                       </div>
+                      {skill.details.length > 0 && (
+                        <motion.button
+                          onClick={() => setIsExpanded(!isExpanded)}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          onMouseEnter={() => setIsHovering(true)}
+                          onMouseLeave={() => setIsHovering(false)}
+                          className="p-2 rounded-lg bg-[#00f3ff]/10 text-[#00f3ff] hover:bg-[#00f3ff]/20 transition-all duration-300"
+                        >
+                          <motion.div
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            {isExpanded ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          </motion.div>
+                        </motion.button>
+                      )}
                     </div>
                     
-                    <div className="relative mb-6">
+                    <div className="relative mb-4">
                       <div className="w-full bg-gray-800/50 rounded-full h-3 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
@@ -1141,48 +1197,33 @@ function App() {
                       </div>
                     </div>
 
-                    {/* Skill Details */}
-                    {skill.details.length > 0 && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        whileInView={{ opacity: 1, height: 'auto' }}
-                        transition={{ 
-                          duration: 0.6, 
-                          delay: 0.8,
-                          ease: [0.25, 0.46, 0.45, 0.94]
-                        }}
-                        viewport={{ once: true }}
-                        className="space-y-2"
-                      >
-                        {skill.details.map((detail, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ 
-                              duration: 0.4, 
-                              delay: 0.9 + (i * 0.05),
-                              ease: [0.25, 0.46, 0.45, 0.94]
-                            }}
-                            viewport={{ once: true }}
-                            className={`text-sm ${
-                              detail.startsWith('➤') 
-                                ? 'text-[#9d00ff] font-semibold mt-3' 
-                                : detail === '' 
-                                  ? 'h-2' 
-                                  : 'text-gray-400 ml-4'
-                            }`}
-                          >
-                            {detail !== '' && (
-                              <span className="flex items-center gap-2">
-                                {!detail.startsWith('➤') && <span className="w-1 h-1 bg-[#00f3ff] rounded-full"></span>}
+                    <AnimatePresence>
+                      {isExpanded && skill.details.length > 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                          className="mt-4 p-4 bg-black/20 rounded-xl border border-[#00f3ff]/10"
+                        >
+                          <div className="space-y-2 text-sm text-gray-300">
+                            {skill.details.map((detail, i) => (
+                              <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.05, duration: 0.3 }}
+                                className={`${detail.startsWith('➤') ? 'font-semibold text-[#00f3ff] mt-3' : 
+                                          detail.startsWith('•') ? 'ml-4 text-gray-400' : 
+                                          detail === '' ? 'h-2' : 'text-gray-300'}`}
+                              >
                                 {detail}
-                              </span>
-                            )}
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    )}
+                              </motion.div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </motion.div>
               );
@@ -1193,7 +1234,7 @@ function App() {
 
       {/* Certifications Section */}
       <section id="certifications" className="py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20"></div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -1205,36 +1246,22 @@ function App() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+              <motion.span 
+                className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ 
+                  duration: 6, 
+                  repeat: Infinity,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                style={{ backgroundSize: '200% 200%' }}
               >
-                <Award className="w-10 h-10 text-[#00f3ff]" />
-              </motion.div>
-              <h2 className="text-5xl lg:text-6xl font-bold">
-                <motion.span 
-                  className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent"
-                  animate={{ 
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                  }}
-                  transition={{ 
-                    duration: 6, 
-                    repeat: Infinity,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  style={{ backgroundSize: '200% 200%' }}
-                >
-                  Certifications
-                </motion.span>
-              </h2>
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <CheckCircle className="w-10 h-10 text-[#9d00ff]" />
-              </motion.div>
-            </div>
+                Certifications
+              </motion.span>
+            </h2>
             <motion.p 
               className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
               initial={{ opacity: 0 }}
@@ -1242,31 +1269,31 @@ function App() {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Professional certifications and continuous learning achievements
+              Professional certifications and achievements in machine learning and AI
             </motion.p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {certifications.map((cert, index) => (
-              <motion.a
+              <motion.div
                 key={index}
-                href={cert.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                initial={{ opacity: 0, y: 40, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ 
-                  duration: 0.6, 
-                  delay: index * 0.1,
+                  duration: 0.8, 
+                  delay: index * 0.05,
                   ease: [0.25, 0.46, 0.45, 0.94]
                 }}
                 whileHover={{ 
-                  y: -5, 
+                  y: -8,
                   scale: 1.02,
-                  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                  transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
                 }}
                 viewport={{ once: true }}
                 className="group cursor-pointer"
+                onClick={() => window.open(cert.url, '_blank')}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
               >
                 <motion.div 
                   className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/10 to-[#9d00ff]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100"
@@ -1284,33 +1311,51 @@ function App() {
                     >
                       <Award className="w-6 h-6 text-[#00f3ff]" />
                     </motion.div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <motion.h3 
-                        className="text-lg font-bold text-white group-hover:text-[#00f3ff] mb-2"
-                        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="text-lg font-bold text-white group-hover:text-[#00f3ff] mb-2 line-clamp-2"
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                       >
                         {cert.title}
                       </motion.h3>
-                      <motion.p 
-                        className="text-[#9d00ff] font-semibold text-sm mb-3"
-                        animate={{ opacity: [0.7, 1, 0.7] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      >
-                        {cert.date}
-                      </motion.p>
-                      <motion.div 
-                        className="flex items-center gap-2 text-gray-400 group-hover:text-gray-300"
-                        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span className="text-sm">View Certificate</span>
-                      </motion.div>
+                      <div className="flex items-center justify-between">
+                        <motion.span 
+                          className="text-[#9d00ff] font-semibold text-sm"
+                          animate={{ opacity: [0.7, 1, 0.7] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                          {cert.date}
+                        </motion.span>
+                        <motion.div 
+                          className="opacity-0 group-hover:opacity-100"
+                          transition={{ duration: 0.3 }}
+                        >
+                          <ExternalLink className="w-4 h-4 text-[#00f3ff]" />
+                        </motion.div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </motion.a>
+              </motion.div>
             ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
+            className="text-center mt-12"
+          >
+            <p className="text-gray-400 text-lg">
+              Click on any certification to view the credential on 
+              <span className="text-[#9d00ff] font-semibold ml-1">Coursera</span>
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -1382,6 +1427,8 @@ function App() {
                   whileTap={{ scale: 0.95 }}
                   viewport={{ once: true }}
                   className="group relative"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
                 >
                   <motion.div 
                     className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/20 to-[#9d00ff]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100"
