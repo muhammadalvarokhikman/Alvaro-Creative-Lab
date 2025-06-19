@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu, TrendingUp, BarChart3 } from 'lucide-react';
+import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu, TrendingUp, BarChart3, Award, CheckCircle } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
 function App() {
@@ -71,11 +71,12 @@ function App() {
       category: "Robotics"
     },
     {
-      title: "NLP for Legal Documents",
-      description: "Created an intelligent AI system for analyzing, summarizing and extracting insights from legal documents",
-      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      tech: ["BERT", "NLP", "Transformers"],
-      category: "Legal Tech"
+      title: "Sentiment Analysis",
+      description: "Comprehensive sentiment analysis of President Prabowo's responses using advanced NLP techniques",
+      image: "/assets/sentiment_analysist.png",
+      tech: ["Python", "NLTK", "TextBlob"],
+      category: "NLP",
+      url: "https://www.kaggle.com/code/muhammadalvaro/sentiment-analysis-of-presiden-prabowo-menjawab"
     }
   ];
 
@@ -119,24 +120,139 @@ function App() {
       tech: ["Python", "ARIMA", "Statsmodels"],
       category: "Time Series",
       url: "https://www.kaggle.com/code/muhammadalvaro/arima-in-python"
-    },
-    {
-      title: "Sentiment Analysis",
-      description: "Comprehensive sentiment analysis of President Prabowo's responses using advanced NLP techniques",
-      image: "/assets/sentiment_analysist.png",
-      tech: ["Python", "NLTK", "TextBlob"],
-      category: "NLP",
-      url: "https://www.kaggle.com/code/muhammadalvaro/sentiment-analysis-of-presiden-prabowo-menjawab"
     }
   ];
 
   const skills = [
-    { name: "Python", level: 95, icon: Code },
-    { name: "TensorFlow", level: 90, icon: Brain },
-    { name: "PyTorch", level: 85, icon: Cpu },
-    { name: "Hugging Face", level: 88, icon: Sparkles },
-    { name: "RAG Systems", level: 92, icon: Database },
-    { name: "Computer Vision", level: 87, icon: Brain }
+    { 
+      name: "Python", 
+      level: 90, 
+      icon: Code,
+      details: []
+    },
+    { 
+      name: "TensorFlow", 
+      level: 90, 
+      icon: Brain,
+      details: []
+    },
+    { 
+      name: "PyTorch", 
+      level: 85, 
+      icon: Cpu,
+      details: []
+    },
+    { 
+      name: "Unsupervised Learning", 
+      level: 80, 
+      icon: Database,
+      details: [
+        "K-Means Clustering",
+        "Hierarchical Clustering", 
+        "DBSCAN",
+        "Gaussian Mixture Model / GMM",
+        "PCA – Principal Component Analysis",
+        "t-SNE – t-Distributed Stochastic Neighbor Embedding",
+        "Autoencoder",
+        "Isolation Forest",
+        "Self-Organizing Map / SOM",
+        "Spectral Clustering"
+      ]
+    },
+    { 
+      name: "Supervised Learning", 
+      level: 90, 
+      icon: Sparkles,
+      details: [
+        "➤ Klasifikasi (Classification):",
+        "Logistic Regression",
+        "Decision Tree Classifier",
+        "Random Forest Classifier",
+        "K-Nearest Neighbors / KNN",
+        "Support Vector Machine / SVM",
+        "Naive Bayes",
+        "Gradient Boosting Classifier – XGBoost, LightGBM, CatBoost",
+        "Neural Network Classifier",
+        "",
+        "➤ Regresi (Regression):",
+        "Linear Regression",
+        "Ridge Regression",
+        "Lasso Regression",
+        "SVR – Support Vector Regression",
+        "Decision Tree Regressor",
+        "Random Forest Regressor",
+        "Gradient Boosting Regressor",
+        "Neural Network Regressor"
+      ]
+    },
+    { 
+      name: "Neural Network", 
+      level: 90, 
+      icon: Brain,
+      details: [
+        "Feedforward Neural Network / FNN",
+        "Multilayer Perceptron / MLP",
+        "Convolutional Neural Network / CNN",
+        "Recurrent Neural Network / RNN",
+        "Long Short-Term Memory / LSTM",
+        "Gated Recurrent Unit / GRU",
+        "Transformer",
+        "Bidirectional LSTM / BiLSTM"
+      ]
+    }
+  ];
+
+  const certifications = [
+    {
+      title: "Browser-based Models with TensorFlow.js",
+      date: "Nov 2024",
+      url: "https://coursera.org/share/edd3b281bafcafb14e937c8ca3d17208"
+    },
+    {
+      title: "Custom Models, Layers, and Loss Functions with TensorFlow",
+      date: "Nov 2024",
+      url: "https://coursera.org/share/145856427b3503fb25f62926f225b0a2"
+    },
+    {
+      title: "Device-based Models with TensorFlow Lite",
+      date: "Nov 2024",
+      url: "https://coursera.org/share/ba1b9f19cf31db26c38326d13fe5abfb"
+    },
+    {
+      title: "Natural Language Processing in TensorFlow",
+      date: "Nov 2024",
+      url: "https://coursera.org/share/94b22a963083b20e9d9f183f8fb36fa2"
+    },
+    {
+      title: "Sequences, Time Series and Prediction",
+      date: "Nov 2024",
+      url: "https://coursera.org/share/4e3e6a45f5cabdcc849eced37ef85b1d"
+    },
+    {
+      title: "Advanced Learning Algorithms",
+      date: "Oct 2024",
+      url: "https://coursera.org/share/cb3ea7a586815373bf15777e0d579ec6"
+    },
+    {
+      title: "Stanford University & DeepLearning.AI Machine Learning Specialization",
+      date: "Oct 2024",
+      url: "https://coursera.org/share/4394e4af26308bff28ab49a880eba58e"
+    },
+    {
+      title: "Linear Algebra for Machine Learning and Data Science",
+      date: "Oct 2024",
+      url: "https://coursera.org/share/9d5f6cf446419831e2a2930655541193"
+    },
+    {
+      title: "Supervised Machine Learning: Regression and Classification",
+      date: "Oct 2024",
+      url: "https://coursera.org/share/94b2f9c89822ad1f09b9a33487f1bbff"
+    },
+    {
+      title: "Unsupervised Learning, Recommenders, Reinforcement Learning",
+      date: "Oct 2024",
+      url: "https://coursera.org/share/a2c299ee089bd1e230316f1487f0b762"
+    }
   ];
 
   // Enhanced animation variants with smoother transitions
@@ -239,7 +355,7 @@ function App() {
               animate="visible"
               className="flex gap-10"
             >
-              {['About', 'Projects', 'Skills', 'Contact'].map((item, index) => (
+              {['About', 'Projects', 'Skills', 'Certifications', 'Contact'].map((item, index) => (
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
@@ -526,11 +642,63 @@ function App() {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Explore my collection of machine learning projects and AI innovations
+              Explore my comprehensive collection of machine learning projects and AI innovations
             </motion.p>
           </motion.div>
 
-          {/* First Row - Main Projects */}
+          {/* Machine Learning & AI Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              >
+                <Brain className="w-8 h-8 text-[#00f3ff]" />
+              </motion.div>
+              <h3 className="text-3xl lg:text-4xl font-bold">
+                <motion.span 
+                  className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent"
+                  animate={{ 
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  style={{ backgroundSize: '200% 200%' }}
+                >
+                  Machine Learning & AI
+                </motion.span>
+              </h3>
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="w-8 h-8 text-[#9d00ff]" />
+              </motion.div>
+            </div>
+            <motion.p 
+              className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Advanced AI systems, computer vision, and natural language processing solutions
+            </motion.p>
+          </motion.div>
+
+          {/* First Row - ML & AI Projects */}
           <div className="relative mb-20">
             <motion.button 
               whileHover={{ 
@@ -580,7 +748,7 @@ function App() {
                   viewport={{ once: true }}
                   className="flex-none w-[420px] cursor-pointer group"
                   style={{ scrollSnapAlign: 'start' }}
-                  onClick={handleProjectClick}
+                  onClick={() => project.url ? handleTimeSeriesProjectClick(project.url) : handleProjectClick()}
                 >
                   <div className="relative bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 group-hover:border-[#00f3ff]/30">
                     <motion.div 
@@ -658,7 +826,7 @@ function App() {
             </div>
           </div>
 
-          {/* Second Row - Time Series & Analytics Projects */}
+          {/* Time Series & Analytics Section */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -706,10 +874,11 @@ function App() {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Advanced forecasting models and sentiment analysis implementations
+              Advanced forecasting models and time series analysis implementations
             </motion.p>
           </motion.div>
 
+          {/* Second Row - Time Series Projects */}
           <div className="relative">
             <motion.button 
               whileHover={{ 
@@ -856,7 +1025,7 @@ function App() {
         </div>
       </section>
 
-      {/* Ultra Smooth Skills Section */}
+      {/* Enhanced Skills Section */}
       <section id="skills" className="py-32 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
         <div className="container mx-auto px-6 relative z-10">
@@ -945,7 +1114,8 @@ function App() {
                         </motion.span>
                       </div>
                     </div>
-                    <div className="relative">
+                    
+                    <div className="relative mb-6">
                       <div className="w-full bg-gray-800/50 rounded-full h-3 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
@@ -970,10 +1140,176 @@ function App() {
                         </motion.div>
                       </div>
                     </div>
+
+                    {/* Skill Details */}
+                    {skill.details.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        whileInView={{ opacity: 1, height: 'auto' }}
+                        transition={{ 
+                          duration: 0.6, 
+                          delay: 0.8,
+                          ease: [0.25, 0.46, 0.45, 0.94]
+                        }}
+                        viewport={{ once: true }}
+                        className="space-y-2"
+                      >
+                        {skill.details.map((detail, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ 
+                              duration: 0.4, 
+                              delay: 0.9 + (i * 0.05),
+                              ease: [0.25, 0.46, 0.45, 0.94]
+                            }}
+                            viewport={{ once: true }}
+                            className={`text-sm ${
+                              detail.startsWith('➤') 
+                                ? 'text-[#9d00ff] font-semibold mt-3' 
+                                : detail === '' 
+                                  ? 'h-2' 
+                                  : 'text-gray-400 ml-4'
+                            }`}
+                          >
+                            {detail !== '' && (
+                              <span className="flex items-center gap-2">
+                                {!detail.startsWith('➤') && <span className="w-1 h-1 bg-[#00f3ff] rounded-full"></span>}
+                                {detail}
+                              </span>
+                            )}
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
                   </div>
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section id="certifications" className="py-32 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-transparent"></div>
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              >
+                <Award className="w-10 h-10 text-[#00f3ff]" />
+              </motion.div>
+              <h2 className="text-5xl lg:text-6xl font-bold">
+                <motion.span 
+                  className="bg-gradient-to-r from-[#00f3ff] via-[#9d00ff] to-[#00f3ff] bg-clip-text text-transparent"
+                  animate={{ 
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                  }}
+                  transition={{ 
+                    duration: 6, 
+                    repeat: Infinity,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  style={{ backgroundSize: '200% 200%' }}
+                >
+                  Certifications
+                </motion.span>
+              </h2>
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              >
+                <CheckCircle className="w-10 h-10 text-[#9d00ff]" />
+              </motion.div>
+            </div>
+            <motion.p 
+              className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Professional certifications and continuous learning achievements
+            </motion.p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {certifications.map((cert, index) => (
+              <motion.a
+                key={index}
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                whileHover={{ 
+                  y: -5, 
+                  scale: 1.02,
+                  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                }}
+                viewport={{ once: true }}
+                className="group cursor-pointer"
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-[#00f3ff]/10 to-[#9d00ff]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100"
+                  transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                />
+                <div className="relative bg-black/30 backdrop-blur-2xl p-6 rounded-2xl border border-white/10 shadow-xl transition-all duration-500 group-hover:border-[#00f3ff]/30">
+                  <div className="flex items-start gap-4">
+                    <motion.div 
+                      className="p-3 bg-gradient-to-r from-[#00f3ff]/20 to-[#9d00ff]/20 rounded-xl flex-shrink-0"
+                      whileHover={{ 
+                        scale: 1.1, 
+                        rotate: 360,
+                        transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+                      }}
+                    >
+                      <Award className="w-6 h-6 text-[#00f3ff]" />
+                    </motion.div>
+                    <div className="flex-1">
+                      <motion.h3 
+                        className="text-lg font-bold text-white group-hover:text-[#00f3ff] mb-2"
+                        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        {cert.title}
+                      </motion.h3>
+                      <motion.p 
+                        className="text-[#9d00ff] font-semibold text-sm mb-3"
+                        animate={{ opacity: [0.7, 1, 0.7] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        {cert.date}
+                      </motion.p>
+                      <motion.div 
+                        className="flex items-center gap-2 text-gray-400 group-hover:text-gray-300"
+                        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span className="text-sm">View Certificate</span>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
           </div>
         </div>
       </section>
