@@ -295,12 +295,18 @@ function App() {
         repeat: Infinity,
         ease: "easeInOut"
       }
-    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0f0f0f] to-[#1a1a1a] text-white overflow-x-hidden">
-      <WarningTooltip />
+      {/* Warning Banner */}
+      <div className="bg-yellow-500/10 border-b border-yellow-500/20 py-2">
+        <div className="container mx-auto px-4">
+          <p className="text-yellow-400 text-sm text-center">
+            ⚠️ Sebagian informasi masih bersifat dummy dan keseluruhan masih dalam pengembangan
+          </p>
+        </div>
+      </div>
       
       {/* Enhanced Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none">
