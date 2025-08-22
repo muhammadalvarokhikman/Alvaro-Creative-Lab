@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Brain, Github, Linkedin, Mail, ChevronLeft, ChevronRight, ExternalLink, Sparkles, Code, Database, Cpu, TrendingUp, BarChart3, Award, CheckCircle } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import WarningTooltip from './components/WarningTooltip';
 
 function App() {
   const [heroRef, heroInView] = useInView({
@@ -299,6 +300,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0f0f0f] to-[#1a1a1a] text-white overflow-x-hidden">
+      <WarningTooltip />
+      
       {/* Enhanced Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none">
         {[...Array(25)].map((_, i) => (
