@@ -89,7 +89,7 @@ function App() {
       image: "/assets/simple_exponential_smoothing.png",
       tech: ["Python", "Statsmodels", "Matplotlib"],
       category: "Forecasting",
-      url: "https://github.com/muhammadalvarokhikman/Alvaro-Creative-Lab/blob/main/assets/simple_exponential_smoothing.png"
+      url: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
     },
     {
       title: "Double Exponential Smoothing",
