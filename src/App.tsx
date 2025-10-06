@@ -89,7 +89,7 @@ function App() {
       image: "/assets/simple_exponential_smoothing.png",
       tech: ["Python", "Statsmodels", "Matplotlib"],
       category: "Forecasting",
-      url: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+      url: "https://www.kaggle.com/code/muhammadalvaro/simple-exponential-smoothing-in-python"
     },
     {
       title: "Double Exponential Smoothing",
