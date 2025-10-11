@@ -76,6 +76,14 @@ function App() {
 
   const timeSeriesProjects = [
     {
+      title: "Online Retail Analysis",
+      description: "Online Retail Data Analysis & Customer Segmentation using RFM (Recency, Frequency, Monetary)",
+      image: "/assets/online_retail_analysis.png",
+      tech: ["Python", "Pandas", "Seaborn"],
+      category: "Time Series",
+      url: "https://github.com/muhammadalvarokhikman/Online-Retail-Analysis/tree/main"
+    },
+    {
       title: "Simple Moving Average",
       description: "Implementation of Simple Moving Average technique for time series forecasting and trend analysis in Python",
       image: "/assets/simple_moving_average.png",
