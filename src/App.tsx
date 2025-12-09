@@ -51,11 +51,12 @@ function App() {
       category: "Computer Vision"
     },
     {
-      title: "AI-Powered Healthcare Analytics",
-      description: "Developed predictive models for early disease detection using advanced medical imaging analysis",
+      title: "Breast Cancer Prediction System",
+      description: "Built a machine-learning pipeline for early breast cancer diagnosis using PCA-based dimensionality reduction and a logistic regression classifier, deployed with a modern Streamlit web app UI.",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      tech: ["PyTorch", "Medical Imaging", "CNN"],
-      category: "Healthcare AI"
+      tech: ["Python", "PCA", "Logistic Regression", "Streamlit"],
+      category: "Healthcare Analytics",
+      url: "https://breast-cancer-prediction-pca-logistic-regression.streamlit.app/"
     },
     {
       title: "Autonomous Drone Navigation",
@@ -559,7 +560,7 @@ function App() {
           <div className="text-center mt-12">
             <p className="text-gray-400 text-lg">
               Click on any project to explore detailed implementations on
-              <span className="text-[#00f3ff] font-semibold ml-1">Kaggle</span>
+              <span className="text-[#00f3ff] font-semibold ml-1">Kaggle or Web</span>
             </p>
           </div>
         </div>
