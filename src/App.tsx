@@ -52,7 +52,7 @@ function App() {
     },
     {
       title: "Breast Cancer Prediction System",
-      description: "Built a machine-learning pipeline for early breast cancer diagnosis using PCA-based dimensionality reduction and a logistic regression classifier, deployed with a modern Streamlit web app UI.",
+      description: "Built a ML pipeline for early breast cancer diagnosis using PCA-based dimensionality reduction and a logistic regression classifier, deployed with a Streamlit.",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       tech: ["Python", "PCA", "Logistic Regression", "Streamlit"],
       category: "Healthcare Analytics",
