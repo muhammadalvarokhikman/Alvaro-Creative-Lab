@@ -80,7 +80,7 @@ function App() {
       title: "Universal Finance Time Series Forecaster",
       description: "An automated forecasting platform leveraging AutoML (AutoTS) to deliver high-precision financial predictions.",
       image: "/assets/universal_finance_forecaster.png",
-      tech: ["Python", "AutoTS","Pandas", "Matplotlib"],
+      tech: ["Python", "AutoTS","Pandas"],
       category: "Time Series",
       url: "https://finance-forecaster.streamlit.app/"
     },
