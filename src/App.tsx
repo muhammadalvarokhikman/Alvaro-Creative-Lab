@@ -77,12 +77,12 @@ function App() {
 
   const timeSeriesProjects = [
     {
-      title: "Online Retail Analysis",
-      description: "Online Retail Data Analysis & Customer Segmentation using RFM (Recency, Frequency, Monetary)",
-      image: "/assets/online_retail_analysis.png",
-      tech: ["Python", "Pandas", "Seaborn"],
+      title: "Universal Finance Time Series Forecaster",
+      description: "An automated forecasting platform leveraging AutoML (AutoTS) to deliver high-precision financial predictions.",
+      image: "/assets/universal_finance_forecaster.png",
+      tech: ["Python", "AutoTS","Pandas", "Matplotlib"],
       category: "Time Series",
-      url: "https://github.com/muhammadalvarokhikman/Online-Retail-Analysis/tree/main"
+      url: "https://finance-forecaster.streamlit.app/"
     },
     {
       title: "Online Retail Analysis",
